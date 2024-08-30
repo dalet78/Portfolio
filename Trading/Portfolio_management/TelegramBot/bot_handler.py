@@ -21,13 +21,8 @@ class CommandBot:
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.logger = logging.getLogger(__name__)
         # Pianifica l'esecuzione della routine giornaliera alle 8:00 ogni mattina
-        schedule.every().day.at("13:36").do(self.daily_routine)
-        #schedule.every().tuesday.at("08:00").do(self.daily_routine)
-        #schedule.every().wednesday.at("08:00").do(self.daily_routine)
-        #schedule.every().thursday.at("08:00").do(self.daily_routine)
-        #schedule.every().friday.at("08:00").do(self.daily_routine)
-        #schedule.every().saturday.at("08:00").do(self.daily_routine)
-        schedule.every().day.at("13:56").do(self.weekly_routine)
+        schedule.every().day.at("08:00").do(self.daily_routine)
+        schedule.every().sunday.at("09:00").do(self.weekly_routine)
         self.lista_chat_id = ['1458740893','5634630295']
 
     def start(self) -> None:
@@ -254,16 +249,6 @@ class CommandBot:
         reply_text = 'Okay, bye.'
         reply_markup = ReplyKeyboardRemove()
         message.reply_text(reply_text, reply_markup=reply_markup)
-
-    # def save_user_state(user_id, state):
-    #     with open('user_states.json', 'r+') as file:
-    #         data = json.load(file)
-    #         data[str(user_id)] = state
-    #         file.seek(0)
-    #         json.dump(data, file)
-
-    # def get_user_state(self, user_id):
-    #     return self.user_states.get(user_id, TOP_LEVEL)
 
     def set_user_state(self, user_id, state):
         self.user_states[user_id] = state

@@ -1,9 +1,17 @@
 pyrogram
+backtesting
+MarketProfile
 numpy
 pandas
+pandas-datareader
+padas-ta
 yfinance
 matplotlib
+matplotlib-inline
+mplfinance
 docx
 fredapi
 requests
 reportlab
+schedule
+scikit-learn
