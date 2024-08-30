@@ -1,22 +1,15 @@
 class Solution:
-    def __init__(self, nums: list[int]) -> None:
-        self.nums = nums
+    def __init__(self, prices: list[int]) -> None:
+        self.prices = prices
 
-    def remove_duplicate(self):
-        list_without_duplicate =[]
-        for elem in self.nums:
-            if elem not in list_without_duplicate:
-                list_without_duplicate.append(elem)
-        return list_without_duplicate
-    
-    def list_order(self):
-        self.nums = sorted(self.nums)
-
-    def removeDuplicates(self) -> int:
-        list_without_duplicate = self.remove_duplicate()
-        k= len(list_without_duplicate)
-        self.nums =  list_without_duplicate
-        return (self.nums, k) 
+    def maxProfit(self) -> int:
+        total_profit=0
+        temp_profit_list = [0,0]
+        for i in range(0, len(self.prices)-1):
+            for j in range (i, len(self.prices)-i):
+                if self.prices[j+1] >= self.prices[j]:
+                    pass
+        return self.prices 
     
 
 test_solution = Solution(nums=[0,0,1,1,1,2,2,3,3,4])
