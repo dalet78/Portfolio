@@ -1,15 +1,11 @@
-from framework.resources.helpers.logger import LoggerClass
+from framework.resources.helpers.logger import logger
 from framework.resources.helpers.version import print_framework_version
 
-def set_logger_file(file_log_path = None) ->None:
-    logger = LoggerClass()
-    if file_log_path: 
-        logger.set_log_path(file_log_path)
-    else:
-        logger.set_log_path()
+def create_logger_file() ->None:
+    logger.set_log_path()
 
 def main() -> None :
-    set_logger_file()
+    create_logger_file()
     print_framework_version()
     
 

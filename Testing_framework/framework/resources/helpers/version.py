@@ -1,4 +1,4 @@
-from .logger import LoggerClass
+from .logger import logger
 
 
 def get_framework_version():
@@ -6,6 +6,5 @@ def get_framework_version():
 
 def print_framework_version() ->None:
     framework_version = get_framework_version()
-    logger = LoggerClass()
-    logger.info(message=framework_version)
+    logger.info(message=f'Testing framework: {framework_version}')
 

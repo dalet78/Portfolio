@@ -1,7 +1,7 @@
 import logging
 
-DEFAULT_LOG_FILENAME = 'test.log'  # Improved naming for clarity
-
+DEFAULT_LOG_FILENAME = "test.log"  # Improved naming for clarity
+NAME = "LOGGER" #Set logger name change with framework name
 
 class LoggerClass:
     """
@@ -17,10 +17,10 @@ class LoggerClass:
 
     """
 
-    def __init__(self, file_log_path=DEFAULT_LOG_FILENAME):
-        self.logger = logging.getLogger(__name__)
+    def __init__(self, log_file=DEFAULT_LOG_FILENAME):
+        self.logger = logging.getLogger(NAME)
         self.logger.setLevel(logging.DEBUG)
-        self.file_log_path = file_log_path
+        self.file_log_path = log_file
 
         try:
             self.set_log_path()
@@ -28,14 +28,17 @@ class LoggerClass:
             print(f"Error setting log path: {e}")
             self.logger.error(f"Error setting log path: {e}")  # Log the error
 
-    def set_log_path(self):
+    def set_log_path(self, log_file=None):
+        if log_file:
+            self.file_log_path = log_file
+
         # Clear existing handlers (same approach as previous responses)
         for handler in self.logger.handlers[:]:
             self.logger.removeHandler(handler)
 
         # Create a new handler with improved formatting and error handling
         try:
-            file_handler = logging.FileHandler(self.file_log_path)
+            file_handler = logging.FileHandler(self.file_log_path, mode="w")
             file_handler.setLevel(logging.INFO)
             formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
             file_handler.setFormatter(formatter)
@@ -59,3 +62,6 @@ class LoggerClass:
 
     def critical(self, message): 
         self.logger.critical(message) 
+
+
+logger = LoggerClass()
