@@ -1,4 +1,9 @@
 import logging
+import time
+
+from art import * 
+
+#from art import *
 
 DEFAULT_LOG_FILENAME = "test.log"  # Improved naming for clarity
 NAME = "LOGGER" #Set logger name change with framework name
@@ -29,8 +34,8 @@ class LoggerClass:
             self.logger.error(f"Error setting log path: {e}")  # Log the error
 
     def set_log_path(self, log_file=None):
-        if log_file:
-            self.file_log_path = log_file
+        # if log_file:
+        #     self.file_log_path = log_file
 
         # Clear existing handlers (same approach as previous responses)
         for handler in self.logger.handlers[:]:
@@ -48,11 +53,11 @@ class LoggerClass:
             print(f"Error creating file handler: {e}")
             self.logger.error(f"Error creating file handler: {e}")  # Log the error
 
-    def print_log_title() -> None :
+    def print_log_title(self) -> None :
         """ Print title of Framework name"""
         self.info(text2art(text=f"\n(((   xxx   )))\n", font="tarty1"))
         self.info("(((xxx))) *** PLATFORM - AUTOMATION - FRAMEWORK *** (((xxx)))")
-        self.debug(f"Log started at {self.log_path}")
+        self.debug(f"Log started at {self.file_log_path}")
         time.sleep(0.5)  # delay required to make order of logs prints
 
 

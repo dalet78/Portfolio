@@ -1,6 +1,6 @@
 import pytest 
 
-from framework.resources.helpers.logger import logger
+from ..framework.resources.helpers.logger import logger
 
 SETUP_CONFIG_YAML = "resources.yaml"
 PRETEST = "[PRE-TEST]"
@@ -13,7 +13,7 @@ def _finale_test():
     pass
 
 @pytest.fixture(scope = "function")
-def _test_env():
+def test_env():
     try:
         logger.print_log_title()
         logger.info(f"{PRETEST} STARTED")
