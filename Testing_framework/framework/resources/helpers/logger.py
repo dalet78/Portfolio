@@ -6,26 +6,36 @@ DEFAULT_LOG_FILENAME = 'test.log'  # Improved naming for clarity
 class LoggerClass:
     """
     Improved Logger class with enhanced features and error handling.
+
+    Example usage:
+    logger = LoggerClass()  # Use default log file
+    logger.info("This is an informational message.")
+
+    # Optionally change the log file path
+    logger.set_log_path("my_custom_log.log")
+    logger.warning("This is a warning message.")
+
     """
 
     def __init__(self, file_log_path=DEFAULT_LOG_FILENAME):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
+        self.file_log_path = file_log_path
 
         try:
-            self.set_log_path(file_log_path)
+            self.set_log_path()
         except (IOError, OSError) as e:  # Handle potential file-related errors
             print(f"Error setting log path: {e}")
             self.logger.error(f"Error setting log path: {e}")  # Log the error
 
-    def set_log_path(self, file_log_path):
+    def set_log_path(self):
         # Clear existing handlers (same approach as previous responses)
         for handler in self.logger.handlers[:]:
             self.logger.removeHandler(handler)
 
         # Create a new handler with improved formatting and error handling
         try:
-            file_handler = logging.FileHandler(file_log_path)
+            file_handler = logging.FileHandler(self.file_log_path)
             file_handler.setLevel(logging.INFO)
             formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
             file_handler.setFormatter(formatter)
