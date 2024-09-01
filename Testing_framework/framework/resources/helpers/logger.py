@@ -48,6 +48,14 @@ class LoggerClass:
             print(f"Error creating file handler: {e}")
             self.logger.error(f"Error creating file handler: {e}")  # Log the error
 
+    def print_log_title() -> None :
+        """ Print title of Framework name"""
+        self.info(text2art(text=f"\n(((   xxx   )))\n", font="tarty1"))
+        self.info("(((xxx))) *** PLATFORM - AUTOMATION - FRAMEWORK *** (((xxx)))")
+        self.debug(f"Log started at {self.log_path}")
+        time.sleep(0.5)  # delay required to make order of logs prints
+
+
     def debug(self, message):
         self.logger.debug(message)
 
@@ -62,6 +70,8 @@ class LoggerClass:
 
     def critical(self, message): 
         self.logger.critical(message) 
+
+
 
 
 logger = LoggerClass()
