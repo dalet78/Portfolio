@@ -62,3 +62,4 @@ keyring~=24.3.0
 chardet~=5.2.0
 pywin32>=228,<=305; platform_system == "Windows"
 pygtail~=0.14.0
+fabric

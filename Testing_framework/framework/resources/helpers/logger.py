@@ -23,6 +23,7 @@ class LoggerClass:
     """
 
     def __init__(self, log_file=DEFAULT_LOG_FILENAME):
+        logging.basicConfig(level=logging.DEBUG)
         self.logger = logging.getLogger(NAME)
         self.logger.setLevel(logging.DEBUG)
         self.file_log_path = log_file
@@ -56,7 +57,7 @@ class LoggerClass:
     def print_log_title(self) -> None :
         """ Print title of Framework name"""
         self.info(text2art(text=f"\n(((   xxx   )))\n", font="tarty1"))
-        self.info("(((xxx))) *** PLATFORM - AUTOMATION - FRAMEWORK *** (((xxx)))")
+        self.info("(((xxx))) *** DAVID - AUTOMATION - FRAMEWORK *** (((xxx)))")
         self.debug(f"Log started at {self.file_log_path}")
         time.sleep(0.5)  # delay required to make order of logs prints
 
@@ -75,8 +76,6 @@ class LoggerClass:
 
     def critical(self, message): 
         self.logger.critical(message) 
-
-
 
 
 logger = LoggerClass()
