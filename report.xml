@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="0.659" timestamp="2024-09-02T14:20:30.747789+03:00" hostname="dp-Lenovo-G50-70"><testcase classname="Tests.test_example.TestExampleClass" name="test_somma" time="0.514" /></testsuite></testsuites>
