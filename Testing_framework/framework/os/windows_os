@@ -1,0 +1,110 @@
+import os
+import shutil
+import subprocess
+import requests
+
+from Testing_framework.framework.resources.helpers.logger import logger
+
+
+class Windows_os:
+    def __init__(self):
+        pass
+
+    def create_directory(self, directory_path):
+        """Creates a new directory.
+
+        Args:
+            directory_path (str): The full path of the directory to create.
+        """
+        try:
+            os.makedirs(directory_path)
+            logger.info(f"Directory {directory_path} created successfully.")
+        except OSError as error:
+            logger.error(f"Error creating directory: {error}")
+
+    def download_file(self, url, destination):
+        """Downloads a file from the specified URL and saves it to the destination.
+
+        Args:
+            url (str): The URL of the file to download.
+            destination (str): The local path where the file will be saved.
+        """
+        response = requests.get(url, stream=True)
+        response.raise_for_status()  # Raise an exception for error HTTP statuses
+        with open(destination, 'wb') as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:  # filter out keep-alive new chunks
+                    f.write(chunk)
+
+    def as_admin(self, command):
+        """Executes a command with administrator privileges on Windows.
+
+        Args:
+            command (str): The command to execute as administrator.
+
+        Returns:
+            str: The output of the command.
+
+        Note: Requires user to have administrator privileges.
+        """
+        try:
+            subprocess.check_call(['powershell', '-Command', command], shell=True)
+        except subprocess.CalledProcessError as e:
+            logger.error(f"Error executing command: {e}")
+    
+    def remove_dir(self, directory_path):
+        """Removes a directory and its contents.
+
+        Args:
+            directory_path (str): The path to the directory to remove.
+        """
+        try:
+            os.rmdir(directory_path)
+            logger.info(f"Directory {directory_path} removed successfully.")
+        except OSError as error:
+            logger.error(f"Error removing directory: {error}")
+
+    def is_file_exist(self, file_path):
+        """Checks if a file exists.
+
+        Args:
+            file_path (str): The path to the file.
+
+        Returns:
+            bool: True if the file exists, False otherwise.
+        """
+        return os.path.isfile(file_path)
+
+    def is_folder_exist(self, folder_path):
+        """Checks if a folder exists.
+
+        Args:
+            folder_path (str): The path to the folder.
+
+        Returns:
+            bool: True if the folder exists, False otherwise.
+        """
+        return os.path.isdir(folder_path)
+
+    def is_file_empty(self, file_path):
+        """Checks if a file is empty.
+
+        Args:
+            file_path (str): The path to the file.
+
+        Returns:
+            bool: True if the file is empty, False otherwise.
+        """
+        return os.path.getsize(file_path) == 0
+
+    def is_folder_empty(self, folder_path):
+        """Checks if a folder is empty.
+
+        Args:
+            folder_path (str): The path to the folder.
+
+        Returns:
+            bool: True if the folder is empty, False otherwise.
+        """
+        return not os.listdir(folder_path)
+    

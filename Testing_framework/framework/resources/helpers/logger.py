@@ -63,18 +63,33 @@ class LoggerClass:
 
 
     def debug(self, message):
+        """
+        debug level
+        """
         self.logger.debug(message)
 
     def info(self, message):
+        """
+        info level
+        """
         self.logger.info(message)
 
     def warning(self, message):
+        """
+        warning level
+        """
         self.logger.warning(message)
 
     def error(self, message):
+        """
+        error level
+        """
         self.logger.error(message)
 
     def critical(self, message): 
+        """
+        critical level
+        """
         self.logger.critical(message) 
 
 

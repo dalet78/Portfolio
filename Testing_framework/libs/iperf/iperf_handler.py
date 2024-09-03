@@ -1,4 +1,5 @@
 import os
+import time
 
 from Testing_framework.framework.resources.helpers.logger import logger
 from iperf_helper import IPERF, _IperfBase
@@ -18,15 +19,15 @@ class Iperf(_IperfBase):
 
     def start_iperf_server(self, ip=None):
         """
-        Iperf3 Start Server on ipc function
+        Iperf3 Start Server on pc function
         kill old iPerf process if running
         delete old json file is exists
         start server on Ipc
         """
-        self._logger.info(f"Running: {__name__}.start_server")
+        self.logger.info(f"Running: {__name__}.start_server")
         self._start_server()
     
-    def start_iperf_client(self, ip=None, is_udp = False, interval=1, duration=120, bandwidth=250, length=8000, num_session= 1):
+    def start_iperf_client(self, ip_client=None, is_udp = False, interval=1, duration=120, bandwidth=250, length=8000, num_session= 1):
         """
         Iperf3 Start Client function
         kill old iPerf process if running
@@ -37,8 +38,8 @@ class Iperf(_IperfBase):
         @param bandwidth: 250
         @param length:
         """
-        self._logger.info(f"Running: {__name__}.start_udp_client")
-        self._start_client(on_acp=True, on_ipc=False, is_udp=is_udp, interval=interval, duration=duration,
+        self.logger.info(f"Running: {__name__}.start_udp_client")
+        self._start_client(ip = ip_client,  is_udp=is_udp, interval=interval, duration=duration,
                            bandwidth=bandwidth, length=length)
         
     def _start_server(self):
@@ -46,34 +47,21 @@ class Iperf(_IperfBase):
         if self.port:
             cmd += ['-p', str(self.port)]
 
-        if on_acp:
-            filename = f"iperf_server_{self._test.acp.soc(0).name}"
-            self.server_json_name = "server_result.json"
+        filename = f"iperf_server_{self._test.acp.soc(0).name}"
+        self.server_json_name = "server_result.json"
 
-            cmd += ['-J', '--logfile', self.server_json_name]
+        cmd += ['-J', '--logfile', self.server_json_name]
 
-            return self._test.acp.soc(0).os.start_process_in_background(' '.join(cmd))
-        else:
-            filename = f"iperf_server_{self._test.ctrl.name}"
-            ctrl_path = self._test.ctrl.get_temp_log_dir()
-
-            self.server_json_name = Path(ctrl_path) / 'soc0' / self._test.ctrl.os.generate_temp_filename(filename,
-                                                                                                         '.json')
-            cmd += ['-J', '--logfile', self._test.ctrl.os.normalize_path(self.server_json_name)]
-
-            return self._test.ctrl.os.start_process_in_background(' '.join(cmd))
-
-    def _start_client(self, on_acp, on_ipc, is_udp, bandwidth=250, length=None, interval=1, duration=120, sessions=4,
+        return self._test.acp.soc(0).os.start_process_in_background(' '.join(cmd))
+    
+    def _start_client(self, ip_client, is_udp, bandwidth=250, length=None, interval=1, duration=120, sessions=4,
                       parallel=""):
-        if on_acp:
-            filename = f"iperf_client_{self._test.acp.soc(0).name}"
-            self.client_json_name = self._test.acp.soc(0).os.get_temp_file_path(filename, '.json')
-        else:
-            filename = f"iperf_client_{self._test.ctrl.name}"
-            ctrl_path = self._test.ctrl.get_temp_log_dir()
+        
+        filename = f"iperf_client_{self._test.ctrl.name}"
+        ctrl_path = self._test.ctrl.get_temp_log_dir()
 
-            self.client_json_name = self._test.ctrl.os.normalize_path(
-                Path(ctrl_path) / 'soc0' / self._test.ctrl.os.generate_temp_filename(filename, '.json'))
+        self.client_json_name = self._test.ctrl.os.normalize_path(
+            Path(ctrl_path) / 'soc0' / self._test.ctrl.os.generate_temp_filename(filename, '.json'))
 
         stop_flag = False
 
