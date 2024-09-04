@@ -3,9 +3,11 @@ from locust.stats import StatsCSVFileWriter
 from locust.user.task import TaskSet
 
 from Testing_framework.libs.locust.locust_helper import LocustHelper
+from Testing_framework.framework.resources.helpers.logger import logger
 
 
 def set_enviroment():
+        logger.info(f"Set enviroment configuration")
         environment = Environment(user_classes=[LocustHelper])
 
         # Crea l'ambiente simulato per Locust
@@ -19,6 +21,7 @@ class LocustHandler(LocustHelper):
     
     def run_http_test(self):
         # Crea un'istanza di LocustHandler con l'ambiente creato
+        logger.info(f"Start http test on server")
         http_test = LocustHelper(environment=self.environment)
 
         # Esegui il test task

@@ -24,3 +24,20 @@ class TestExampleClass:
             ssh_connection.close_connection()
 
         _run_main_flow(test_env)
+
+    @pytest.mark.timeout(600)
+    @pytest.mark.sanity
+    def test_downlink_iperf(self, test_env):
+        """
+        Verify ssh connection library
+        """
+        def _run_main_flow(test):
+            logger.info(f"Start test Verify ssh connection library ")
+            """
+            MAIN FLOW FUNCTIONS             
+            """
+            run_iperf_on_server()
+            run_iperf_on_client()
+            verify_result()
+
+        _run_main_flow(test_env)

@@ -1,4 +1,4 @@
-2024-09-04 11:52:34,235 - LOGGER - INFO - 
+2024-09-04 23:14:28,437 - LOGGER - INFO - 
       
 ░░██╗░░██╗░░██╗   ██╗░░██╗██╗░░██╗██╗░░██╗   ██╗░░██╗░░██╗░░
 ░██╔╝░██╔╝░██╔╝   ╚██╗██╔╝╚██╗██╔╝╚██╗██╔╝   ╚██╗░╚██╗░╚██╗░
@@ -7,8 +7,16 @@
 ░╚██╗░╚██╗░╚██╗   ██╔╝╚██╗██╔╝╚██╗██╔╝╚██╗   ██╔╝░██╔╝░██╔╝░
 ░░╚═╝░░╚═╝░░╚═╝   ╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝   ╚═╝░░╚═╝░░╚═╝░░
 
-2024-09-04 11:52:34,235 - LOGGER - INFO - (((xxx))) *** DAVID - AUTOMATION - FRAMEWORK *** (((xxx)))
-2024-09-04 11:52:34,736 - LOGGER - INFO - [PRE-TEST] STARTED
-2024-09-04 11:52:34,738 - LOGGER - INFO - Start test Verify locust library
-2024-09-04 11:53:34,739 - LOGGER - INFO - Test completed. Total request: 44660, Succesful Responce : 44660
-2024-09-04 11:53:34,758 - LOGGER - INFO - [POST-TEST] *** MAIN POST-TEST STARTED ***
+2024-09-04 23:14:28,438 - LOGGER - INFO - (((xxx))) *** DAVID - AUTOMATION - FRAMEWORK *** (((xxx)))
+2024-09-04 23:14:28,940 - LOGGER - INFO - [PRE-TEST] STARTED
+2024-09-04 23:14:28,969 - LOGGER - INFO - Start test Verify locust library
+2024-09-04 23:14:39,358 - LOGGER - INFO - Set enviroment configuration
+2024-09-04 23:14:39,363 - LOGGER - INFO - Start http test on server
+2024-09-04 23:14:39,371 - LOGGER - INFO - Start ot send multiple http request
+2024-09-04 23:15:39,382 - LOGGER - INFO - Stop ot send multiple http request
+
+2024-09-04 23:15:39,385 - LOGGER - INFO - Test completed. Total request: 6192, Succesful Responce : 6192
+2024-09-04 23:15:39,409 - LOGGER - INFO - [POST-TEST] *** MAIN POST-TEST STARTED ***
+2024-09-04 23:15:39,413 - LOGGER - INFO - kill glances process
+2024-09-04 23:15:39,416 - LOGGER - INFO - Get PID number of glances
+2024-09-04 23:15:39,594 - LOGGER - INFO - PID: 159096

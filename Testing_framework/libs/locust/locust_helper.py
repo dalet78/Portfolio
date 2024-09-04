@@ -20,6 +20,7 @@ class LocustHelper(HttpUser):
 
     @task
     def my_task(self):
+        logger.info(f"Start ot send multiple http request")
         while time.time() - self.start_time < self.test_duration:
             start_time = time.time()
             response = self.client.get(self.url)
@@ -30,6 +31,7 @@ class LocustHelper(HttpUser):
                 # logger.info(f"Request succeess {end_time - start_time:.2f}s: {response.text}")
             else:
                 logger.error(f"Request fail: {response.text}")
+        logger.info(f"Stop ot send multiple http request\n")
 
     def on_stop(self):
         logger.info(f"Test completed. Total request: {self.total_requests}, Succesful Responce : {self.successful_requests}")
