@@ -81,7 +81,7 @@ def print_images():
 # Esempio di utilizzo:
 
 def create_report():
-    report = HTMLTestReportBuilder("dalet.p@gmail.com", "Ilna2013", "david.perugia78@gmail.com", "smtp.gmail.com", 587)
+    report = HTMLTestReportBuilder("dalet.p@gmail.com", "Ilna2013", "asaf.chepo@gmail.com", "smtp.gmail.com", 587)
     images = [('immagine1.png', 'cpu_usage.png'), ('immagine2.png', 'mem_usage.png')]
     log_file = 'test.log'
     report.build_and_send_report(test_dict, images, log_file )
