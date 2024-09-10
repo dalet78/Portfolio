@@ -10,6 +10,7 @@ from ..framework.resources.helpers.logger import logger
 from Testing_framework.libs.dataset.DataSet_Handler import DataSetHandler
 from Testing_framework.framework.resources.helpers.report_builder import ReportBuilder
 from Testing_framework.framework.resources.helpers.html_report_builder import HTMLTestReportBuilder
+from Testing_framework.framework.core.config.test_config import Config
 
 SETUP_CONFIG_YAML = "resources.yaml"
 PRETEST = "[PRE-TEST]"
@@ -88,3 +89,9 @@ def create_report():
 
 def send_report():
     pass
+
+@pytest.fixture(scope='session')
+def config(request):
+    config_obj = Config()
+    setup_name = request.config.getoption("--setup")
+    return config_obj.get_setup_data(setup_name)
