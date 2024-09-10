@@ -2,21 +2,20 @@ class Solution:
     def __init__(self, nums: list[int]) -> None:
         self.nums = nums
 
-    def remove_duplicate(self):
-        list_without_duplicate =[]
-        for elem in self.nums:
-            if elem not in list_without_duplicate:
-                list_without_duplicate.append(elem)
-        return list_without_duplicate
-    
-    def list_order(self):
-        self.nums = sorted(self.nums)
-
     def removeDuplicates(self) -> int:
-        list_without_duplicate = self.remove_duplicate()
-        k= len(list_without_duplicate)
-        self.nums =  list_without_duplicate
-        return (self.nums, k) 
+        if not self.nums:
+            return 0
+
+        # Initialize the index for unique elements
+        k = 1
+
+        # Go through the sorted array and remove duplicates in-place
+        for i in range(1, len(self.nums)):
+            if self.nums[i] != self.nums[i - 1]:  # if current is different from the previous
+                self.nums[k] = self.nums[i]  # place it at the next position for unique elements
+                k += 1
+
+        return k
     
 
 test_solution = Solution(nums=[0,0,1,1,1,2,2,3,3,4])
