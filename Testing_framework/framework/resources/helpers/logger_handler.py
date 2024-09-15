@@ -1,9 +1,12 @@
+from abc import ABC, abstractmethod
+from typing import Any
 import logging
 import time
-from abc import ABC, abstractmethod
-
 from art import *
+from Testing_framework.framework.interface.logger_interface import LoggerInterface 
 
+DEFAULT_LOG_FILENAME = "test.log"  # Improved naming for clarity
+NAME = "LOGGER" #Set logger name change with framework name
 
 class LogHandler(ABC):
     """
@@ -39,57 +42,43 @@ class PrintLogHandler(LogHandler):
         print(message)
 
 
-class LoggerClass:
-    """
-    Improved Logger class with enhanced features and error handling.
-
-    Example usage:
-    logger = LoggerClass()  # Use default log handlers
-
-    # Add custom log handlers
-    logger.add_handler(FileLogHandler("my_custom_log.log"))
-    logger.add_handler(PrintLogHandler())
-
-    logger.info("This is an informational message.")
-    """
-
+class LoggerClass(LoggerInterface):
     def __init__(self):
         self.handlers = []
         logging.basicConfig(level=logging.DEBUG)
-        self.logger = logging.getLogger("LOGGER")
+        self.logger = logging.getLogger(NAME)
         self.logger.setLevel(logging.DEBUG)
 
-    def add_handler(self, handler: LogHandler):
-        """
-        Add a custom log handler to the logger.
-        """
+    def add_handler(self, handler: Any) -> None:
         self.handlers.append(handler)
         self.logger.addHandler(handler.file_handler if isinstance(handler, FileLogHandler) else handler)
 
     def print_log_title(self) -> None:
-        """ Print title of Framework name"""
         self.info(text2art(text=f"\n(((   xxx   )))\n", font="tarty1"))
         self.info("(((xxx))) *** DAVID - AUTOMATION - FRAMEWORK *** (((xxx)))")
-        self.debug(f"Log started at {time.strftime('%Y-%m-%d %H:%M:%S')}")  # Use strftime for better formatting
-        time.sleep(0.5)  # delay required to make order of logs prints
+        self.debug(f"Log started at {time.strftime('%Y-%m-%d %H:%M:%S')}")
+        time.sleep(0.5)
 
-    def debug(self, message):
-        """
-        Log message at debug level.
-        """
+    def debug(self, message: str) -> None:
         self._log(message, logging.DEBUG)
 
-    def info(self, message):
-        """
-        Log message at info level.
-        """
+    def info(self, message: str) -> None:
         self._log(message, logging.INFO)
 
-    # ... other logging methods (warning, error, critical) with similar implementation
+    def warning(self, message: str) -> None:
+        self._log(message, logging.WARNING)
 
-    def _log(self, message, level):
+    def error(self, message: str) -> None:
+        self._log(message, logging.ERROR)
+
+    def critical(self, message: str) -> None:
+        self._log(message, logging.CRITICAL)
+
+    def _log(self, message: str, level: int) -> None:
         for handler in self.handlers:
             handler.handle(message, level)
 
-
-logger = LoggerClass()
+# Usa il logger
+logger: LoggerInterface = LoggerClass()
+logger.add_handler(FileLogHandler(DEFAULT_LOG_FILENAME))
+logger.add_handler(PrintLogHandler())

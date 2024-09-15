@@ -6,7 +6,7 @@ import datetime
 import pytz
 import time
 
-from ..framework.resources.helpers.logger import logger
+from ..framework.resources.helpers.logger_handler import logger
 from Testing_framework.libs.dataset.DataSet_Handler import DataSetHandler
 from Testing_framework.framework.resources.helpers.report_builder import ReportBuilder
 from Testing_framework.framework.resources.helpers.html_report_builder import HTMLTestReportBuilder
