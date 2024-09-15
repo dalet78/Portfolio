@@ -91,6 +91,44 @@ class PlaywrightActions(BrowserActions):
             self.page.evaluate("element => element.scrollIntoView()", element)
         else:
             raise Exception(f"Element with selector '{selector}' not found.") 
+        
+    def select_radio(self, selector: str):
+        """Select a radio button."""
+        self._ensure_browser()
+        element = self.find_element(selector)
+        if element:
+            if not element.is_checked():
+                element.check()
+        else:
+            raise Exception(f"Radio button with selector '{selector}' not found.")
+
+    def select_checkbox(self, selector: str):
+        """Select a checkbox."""
+        self._ensure_browser()
+        element = self.find_element(selector)
+        if element:
+            if not element.is_checked():
+                element.check()
+        else:
+            raise Exception(f"Checkbox with selector '{selector}' not found.")
+
+    def verify_radio_checked(self, selector: str) -> bool:
+        """Verify if a radio button is checked."""
+        self._ensure_browser()
+        element = self.find_element(selector)
+        if element:
+            return element.is_checked()
+        else:
+            raise Exception(f"Radio button with selector '{selector}' not found.")
+
+    def verify_checkbox_checked(self, selector: str) -> bool:
+        """Verify if a checkbox is checked."""
+        self._ensure_browser()
+        element = self.find_element(selector)
+        if element:
+            return element.is_checked()
+        else:
+            raise Exception(f"Checkbox with selector '{selector}' not found.")
 
 
 if __name__ == "__main__":
