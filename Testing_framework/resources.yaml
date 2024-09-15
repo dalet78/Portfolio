@@ -1,0 +1,18 @@
+test_data:
+  setup:
+    name: setup_1
+    url: https://example.com
+    username: myuser
+    password: mypassword
+    other_data:
+      key1: value1
+      key2: value2
+
+  setup:
+    name: setup_2
+    url: https://example.com
+    username: myuser1
+    password: mypassword1
+    other_data:
+      key1: value1
+      key2: value3

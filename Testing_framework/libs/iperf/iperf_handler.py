@@ -5,7 +5,7 @@ from Testing_framework.framework.resources.helpers.logger import logger
 from iperf_helper import IPERF, _IperfBase
 
 
-class Iperf(_IperfBase):
+class IperfHendler(_IperfBase):
     """
     Main class with functionality for Influx DB manipulations
     """
@@ -102,3 +102,12 @@ class Iperf(_IperfBase):
             stop_flag = True
             time_thread.join()
             self._remote_host.send_command(f"cat {self.client_json_name}", on_acp=on_acp, on_ipc=on_ipc)
+
+    def run_iperf_on_server(self):
+        pass
+
+    def run_iperf_on_client(self):
+        pass
+
+    def verify_result(self):
+        pass
