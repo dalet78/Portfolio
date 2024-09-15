@@ -9,7 +9,6 @@ class LogHandler(ABC):
     """
     Abstract class representing a log handler.
     """
-
     @abstractmethod
     def handle(self, message, level):
         pass

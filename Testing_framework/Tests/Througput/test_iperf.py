@@ -1,7 +1,7 @@
 import pytest
 
 from Testing_framework.framework.resources.helpers.logger import logger
-from Testing_framework.framework.resources.services.ssh_handler import SshHandler
+from Testing_framework.framework.resources.services.ssh_connection_handler import SshHandler
 
 
 class TestExampleClass:
