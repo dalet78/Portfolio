@@ -29,8 +29,15 @@ class FileLogHandler(LogHandler):
 
     def handle(self, message, level):
         if level >= logging.INFO:
-            self.file_handler.emit(logging.makeRecord(
-                "", level, "", "", message, "", "", 0))
+             self.file_handler.emit(logging.makeLogRecord({
+            "name": "",
+            "level": level,
+            "pathname": "",
+            "lineno": 0,
+            "msg": message,
+            "args": None,
+            "exc_info": None
+        }))
 
 
 class PrintLogHandler(LogHandler):

@@ -75,8 +75,8 @@ class EnhancedSshCommander(SshInterface):
         
         try:
             stdin, stdout, stderr = self.connection.client.exec_command(command)
-            output = stdout.read().decode('utf-8')
-            error = stderr.read().decode('utf-8')
+            output = stdout.read().decode('utf-8', errors='ignore')
+            error = stderr.read().decode('utf-8', errors='ignore')
             if error:
                 logger.error(f"Command error: {error}")
             return output
