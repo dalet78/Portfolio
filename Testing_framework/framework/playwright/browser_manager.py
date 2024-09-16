@@ -1,4 +1,4 @@
-from playwright.sync_api import sync_playwright
+from playwright.async_api import async_playwright
 
 class BrowserManager:
     _instance = None
@@ -10,41 +10,31 @@ class BrowserManager:
         return cls._instance
 
     def __init__(self):
-        # Initialize Playwright instance
+        # Initialize Playwright instance (deferred to `open_browser`)
         self.browser = None
-        self.playwright = sync_playwright().start()
-    
-    def open_browser(self, browser_type="chromium", headless=False):
-        # Launch the browser if not already open, based on the specified browser type
+        self.playwright = None
+
+    async def open_browser(self, browser_type="chromium", headless=False):
+        # Start Playwright and launch the browser if not already open
         if self.browser is None:
+            self.playwright = await async_playwright().start()
+
             if browser_type == "chromium":
-                self.browser = self.playwright.chromium.launch(headless=headless)
+                self.browser = await self.playwright.chromium.launch(headless=headless)
             elif browser_type == "firefox":
-                self.browser = self.playwright.firefox.launch(headless=headless)
+                self.browser = await self.playwright.firefox.launch(headless=headless)
             elif browser_type == "webkit":
-                self.browser = self.playwright.webkit.launch(headless=headless)
+                self.browser = await self.playwright.webkit.launch(headless=headless)
             else:
                 raise ValueError(f"Browser {browser_type} not supported")
         return self.browser
 
-    def close_browser(self):
+    async def close_browser(self):
         # Close the browser and stop Playwright instance
         if self.browser:
-            self.browser.close()
+            await self.browser.close()
             self.browser = None
-            self.playwright.stop()
 
-# Utilizzo della classe BrowserManager
-# if __name__ == "__main__":
-#     manager = BrowserManager()
-
-#     # Aprire un browser Chromium
-#     browser = manager.open_browser(browser_type="chromium", headless=False)
-
-#     # Aprire una nuova pagina e navigare
-#     page = browser.new_page()
-#     page.goto('https://courses.letskodeit.com/practice')
-#     print(page.title())
-
-#     # Chiudere il browser
-#     manager.close_browser()
+        if self.playwright:
+            await self.playwright.stop()
+            self.playwright = None

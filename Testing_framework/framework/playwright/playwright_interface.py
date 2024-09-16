@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 class BrowserActions(ABC):
     """Abstract base class defining the browser actions interface."""
-
+    
     # Existing methods
     @abstractmethod
     def find_element(self, selector: str):
@@ -28,7 +28,6 @@ class BrowserActions(ABC):
     def get_title(self) -> str:
         pass
 
-    # New methods
     @abstractmethod
     def take_screenshot(self, path: str):
         """Take a screenshot of the current page."""

@@ -46,21 +46,39 @@ def test_env():
         logger.info(f"{POSTEST} *** MAIN POST-TEST STARTED ***")
         _finale_test()
         time.sleep(2)
-        kill_clances_process(process=process)
+        kill_glances_process()
         print_images()
         create_report()
 
     except Exception as ex:
         raise AssertionError(f"{PRETEST} FAIL: {ex}")
 
-def kill_clances_process(process):
-    logger.info(f'kill glances process')
-    pid = get_process_pid(process_name="glances")
+def kill_glances_process(process_name="glances"):
+    """
+    Kills the Glances process using both pkill and get_process_pid for reliability.
+
+    Args:
+        process_name (str, optional): The name of the process to kill. Defaults to "glances".
+    """
+    logger.info(f'Attempting to kill Glances process')
+
+    # Try using pkill first for efficiency
+    try:
+        os.system(f"pkill -f '/home/dp/MyProject/Portfolio/.venv/bin/python /home/dp/MyProject/Portfolio/.venv/bin/glances'")
+        logger.info('Glances process killed using pkill')
+        return
+    except OSError as e:
+        logger.warning(f'pkill failed: {e}')
+
+    # Fallback to get_process_pid for more precise control
+    pid = get_process_pid(process_name)
     logger.info(f'PID: {pid}')
+
     if pid:
         os.kill(pid, signal.SIGTERM)
+        logger.info('Glances process killed using get_process_pid')
     else:
-        logger.error("Pid not return correctly")
+        logger.error("Glances process not found")
 
 def get_process_pid(process_name):
     logger.info(f'Get PID number of glances')
