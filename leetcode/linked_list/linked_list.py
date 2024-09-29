@@ -1,6 +1,6 @@
 class Node:
-    def __init__(self, data):
-        self.data = data
+    def __init__(self, value):
+        self.value = value
         self.next = None
 
 class LinkedList:
@@ -30,54 +30,96 @@ class LinkedList:
         """
         temp = self.head
         while temp:
-            print(temp.data, sep=",", end=" ")
+            print(temp.value, sep=",", end=" ")
             temp = temp.next   
         print("\n")
     
-    def append(self, data):
+    def append(self, value):
         """
-        Appends a new node with the given data to the end of the linked list.
+        Appends a new node with the given value to the end of the linked list.
         
-        :param data: The data to be stored in the new node.
-        :type data: Any
+        :param value: The value to be stored in the new node.
+        :type value: Any
         """
-        new_node = Node(data)
+        new_node = Node(value)
         if self.head is None:
             self.head = new_node
             self.tail = new_node
         else:
             self.tail.next = new_node
             self.tail = new_node    
-        self.length += 1    
-
-    def prepend(self, data): 
+        self.length += 1   
+        return True 
+    
+    def pop(self):
         """
-        Prepends a new node with the given data to the beginning of the linked list.
+        Removes the last node from the linked list and returns its value.
         
-        :param data: The data to be stored in the new node.
-        :type data: Any
+        :return: The value of the last node in the linked list.
+        :rtype: Any
         """
-        new_node = Node(data)
+        if self.length == 0:
+            return None
+        temp = self.head
+        pre = self.head
+        while temp.next:
+            pre = temp
+            temp = temp.next
+        self.tail = pre
+        self.tail.next = None
+        self.length -= 1
+        if self.length == 0:
+            self.head = None
+            self.tail = None
+        return temp.value
+
+    def prepend(self, value): 
+        """
+        Prepends a new node with the given value to the beginning of the linked list.
+        
+        :param value: The value to be stored in the new node.
+        :type value: Any
+        """
+        new_node = Node(value)
         if self.head is None:
             self.head = new_node
             self.tail = new_node
         else:
             new_node.next = self.head
             self.head = new_node
+        self.length += 1   
+        return True 
     
-    def insert_after(self, prev_node, data):
+    def pop_first(self):
         """
-        Inserts a new node with the given data after the given previous node.
+        Removes the first node from the linked list and returns its value.
+        
+        :return: The value of the first node in the linked list.
+        :rtype: Any
+        """
+        if self.length == 0:
+            return None
+        temp = self.head
+        self.head = self.head.next
+        temp.next = None
+        self.length -= 1
+        if self.length == 0:
+            self.tail = None
+        return temp.value
+    
+    def insert_after(self, prev_node, value):
+        """
+        Inserts a new node with the given value after the given previous node.
         
         :param prev_node: The node after which the new node should be inserted.
         :type prev_node: Node
-        :param data: The data to be stored in the new node.
-        :type data: Any
+        :param value: The value to be stored in the new node.
+        :type value: Any
         """
         if prev_node is None:
             print("The given previous node must not be None")
             return
-        new_node = Node(data)
+        new_node = Node(value)
         new_node.next = prev_node.next
         prev_node.next = new_node
     
@@ -93,21 +135,19 @@ class LinkedList:
             return
         prev_node.next = prev_node.next.next
 
-    def delete(self, data):
+    def delete(self, value):
         """
-        Deletes the node with the given data from the linked list.
+        Deletes the node with the given value from the linked list.
         
-        :param data: The data of the node to be deleted.
-        :type data: Any
+        :param value: The value of the node to be deleted.
+        :type value: Any
         """
         temp = self.head
         if temp is not None:
-            if temp.data == data:
-                self.head = temp.next
-                temp = None
-                return
+            if temp.value == value:
+                self.pop_first()
         while temp:
-            if temp.data == data:
+            if temp.value == value:
                 break
             prev = temp
             temp = temp.next
@@ -118,7 +158,7 @@ class LinkedList:
 
     def del_node(self, node):
         """
-        Deletes the node with the given data from the linked list.
+        Deletes the node with the given value from the linked list.
         
         :param node: The node to be deleted.
         :type node: Any
@@ -128,12 +168,12 @@ class LinkedList:
         if not current:
             return
 
-        if current.data == node:
+        if current.value == node:
             self.head = current.next
             return
 
         while current.next:
-            if current.next.data == node:
+            if current.next.value == node:
                 previous = current
                 current = current.next
                 previous.next = current.next
@@ -143,9 +183,84 @@ class LinkedList:
                 previous = current
                 current = current.next
 
-        if current and current.data == node:  # Check the last node
+        if current and current.value == node:  # Check the last node
             previous.next = None
+    
+    def get(self, index):
+        """
+        Gets the node at the given index.
         
+        :param index: The index of the node to be retrieved.
+        :type index: int
+        :return: The node at the given index, or None if index is out of bounds.
+        :rtype: Node or None
+        """
+        temp = self.head
+        if index < 0 or index >= self.length:
+            return None
+        for _ in range(index):
+            temp = temp.next
+        return temp
+    
+    def set(self, index, value):
+        """
+        Sets the value of the node at the given index to the given value.
+        
+        :param index: The index of the node to be updated.
+        :type index: int
+        :param value: The new value to be set.
+        :type value: Any
+        """
+        temp = self.get(index)
+        if temp:
+            temp.value = value
+        else:
+            print("Index out of bounds")
+        
+    def reverse(self):
+        """
+        Reverses the linked list in-place.
+        """
+        temp = self.head
+        self.head = self.tail
+        self.tail = temp
+        after = temp.next
+        before = None
+        for _ in range(self.length):
+            after = temp.next
+            temp.next = before
+            before = temp
+            temp = after
+    
+    def find_middle_node(self):
+        """
+        Finds the middle node of the linked list.
+        
+        :return: The middle node of the linked list.
+        :rtype: Node
+        """
+        slow = self.head
+        fast = self.head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
+        
+    def has_loop(self):
+        """
+        Checks if the linked list has a loop.
+        
+        :return: True if the linked list has a loop, False otherwise.
+        :rtype: bool
+        """
+        slow = self.head
+        fast = self.head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+        return False
     
 def main():
     llist = LinkedList(1)
