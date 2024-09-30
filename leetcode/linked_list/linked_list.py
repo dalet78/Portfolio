@@ -1,10 +1,17 @@
 class Node:
-    def __init__(self, value):
+    def __init__(self, value)->None:
+        """
+        Constructor for Node class. 
+        :param value: The value for the Node
+        :type value: object
+        :return: None
+        :rtype: None
+        """
         self.value = value
         self.next = None
 
 class LinkedList:
-    def __init__(self, value=None):
+    def __init__(self, value=None)->None:
 
         """
         Initialize the linked list with a single node containing the value.
@@ -17,7 +24,7 @@ class LinkedList:
         self.tail = new_node
         self.length = 1
 
-    def print_list(self):
+    def print_list(self)->None:
         """
         Prints the linked list in a single line, comma-separated.
 
@@ -34,7 +41,7 @@ class LinkedList:
             temp = temp.next   
         print("\n")
     
-    def append(self, value):
+    def append(self, value)->bool:
         """
         Appends a new node with the given value to the end of the linked list.
         
@@ -51,7 +58,7 @@ class LinkedList:
         self.length += 1   
         return True 
     
-    def pop(self):
+    def pop(self)->bool:
         """
         Removes the last node from the linked list and returns its value.
         
@@ -73,7 +80,7 @@ class LinkedList:
             self.tail = None
         return temp.value
 
-    def prepend(self, value): 
+    def prepend(self, value)->bool: 
         """
         Prepends a new node with the given value to the beginning of the linked list.
         
@@ -90,7 +97,7 @@ class LinkedList:
         self.length += 1   
         return True 
     
-    def pop_first(self):
+    def pop_first(self)->bool:
         """
         Removes the first node from the linked list and returns its value.
         
@@ -107,7 +114,7 @@ class LinkedList:
             self.tail = None
         return temp.value
     
-    def insert_after(self, prev_node, value):
+    def insert_after(self, prev_node, value)->bool:
         """
         Inserts a new node with the given value after the given previous node.
         
@@ -123,7 +130,7 @@ class LinkedList:
         new_node.next = prev_node.next
         prev_node.next = new_node
     
-    def delete_after(self, prev_node):
+    def delete_after(self, prev_node)->bool:
         """
         Deletes the node after the given previous node.
         
@@ -135,7 +142,7 @@ class LinkedList:
             return
         prev_node.next = prev_node.next.next
 
-    def delete(self, value):
+    def delete(self, value)->bool:
         """
         Deletes the node with the given value from the linked list.
         
@@ -156,7 +163,7 @@ class LinkedList:
         prev.next = temp.next
         temp = None
 
-    def del_node(self, node):
+    def del_node(self, node)->bool:
         """
         Deletes the node with the given value from the linked list.
         
@@ -186,7 +193,7 @@ class LinkedList:
         if current and current.value == node:  # Check the last node
             previous.next = None
     
-    def get(self, index):
+    def get(self, index)->Node:
         """
         Gets the node at the given index.
         
@@ -202,7 +209,7 @@ class LinkedList:
             temp = temp.next
         return temp
     
-    def set(self, index, value):
+    def set(self, index, value)->None:
         """
         Sets the value of the node at the given index to the given value.
         
@@ -217,7 +224,7 @@ class LinkedList:
         else:
             print("Index out of bounds")
         
-    def reverse(self):
+    def reverse(self)->None:
         """
         Reverses the linked list in-place.
         """
@@ -232,7 +239,7 @@ class LinkedList:
             before = temp
             temp = after
     
-    def find_middle_node(self):
+    def find_middle_node(self)->Node:
         """
         Finds the middle node of the linked list.
         
@@ -246,7 +253,7 @@ class LinkedList:
             fast = fast.next.next
         return slow
         
-    def has_loop(self):
+    def has_loop(self)->bool:
         """
         Checks if the linked list has a loop.
         
@@ -261,6 +268,30 @@ class LinkedList:
             if slow == fast:
                 return True
         return False
+    
+    def insert(self, index, value):
+        """
+        Inserts a new node with the given value at the given index in the linked list.
+        
+        :param index: The index at which the new node should be inserted.
+        :type index: int
+        :param value: The value to be stored in the new node.
+        :type value: Any
+        :return: True if the insert operation was successful, False otherwise.
+        :rtype: bool
+        """
+        if index < 0 or index > self.length:
+            return False
+        if index == 0:
+            return self.prepend(value)
+        if index == self.length:
+            return self.append(value)
+        new_node = Node(value)
+        temp = self.get(index - 1)
+        new_node.next = temp.next
+        temp.next = new_node
+        self.length += 1   
+        return True  
     
 def main():
     llist = LinkedList(1)
